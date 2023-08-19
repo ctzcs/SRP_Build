@@ -97,16 +97,15 @@ public partial class CameraRenderer
         context.DrawRenderers(cullingResults,ref drawingSettings,ref filteringSettings);
         //画天空盒
         context.DrawSkybox(camera);
+        
+        
         //渲染透明队列
-        //透明队列是从后往前渲染，感觉是因为两个透明物体，重叠部分谁在前谁在后根本看不出来，只要按照物体的位置来排序就行。
+        //透明队列是从后往前渲染，因为混合是和背景混合
         //由于透明对象不写入深度缓冲区，因此从前到后对它们进行排序没有性能优势。但是，当透明对象在视觉上彼此落后时，它们必须从后到前绘制以正确混合。
         sortingSetting.criteria = SortingCriteria.CommonTransparent;
         drawingSettings.sortingSettings = sortingSetting;
         filteringSettings.renderQueueRange = RenderQueueRange.transparent;
         context.DrawRenderers(cullingResults,ref drawingSettings,ref filteringSettings);
-        
-        
-        
     }
 
     
